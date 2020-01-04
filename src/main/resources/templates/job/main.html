@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+
+<h3>Your jobs</h3>
+
+<table>
+    <tr th:each="job : ${jobs}">
+
+        <td>
+            <p th:text="${job.name}"></p>
+        </td>
+        <td>
+            <p th:text="${job.position}"></p>
+        </td>
+
+
+    </tr>
+</table>
+
+</body>
+</html>
