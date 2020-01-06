@@ -8,18 +8,32 @@
 
 <div class="container">
 	<div class="starter-template">
-		<h1>Update a specific author</h1>
+		<h1>New job</h1>
 	</div>
 
-	<form action="#" th:action="@{'/authors/' + ${author.id}}" th:object="${author}" method="post">
-		<div class="form-group">
-			<label for="id">Id</label>
-			<input type="number" class="form-control" th:field="*{id}" id="id" placeholder="Id" disabled>
-		</div>
+
+	<form action="#" th:action="@{'/profile/jobs/new'}" th:object="${job}" method="post">
 
 		<div class="form-group">
-			<label for="name">Author</label>
+			<label>Name</label>
 			<input type="text" class="form-control" th:field="*{name}" id="name" placeholder="Name">
+
+			<label>Start date</label>
+			<input type="date" class="form-control" id="startDate"
+				   placeholder="Start date"
+				   th:field="*{startDate}"/>
+
+			<label>End date</label>
+			<input type="date" class="form-control" id="endDate"
+				   placeholder="End date"
+				   th:field="*{endDate}"/>
+
+			<label>Position</label>
+			<input type="text" class="form-control" th:field="*{position}" id="position" placeholder="Position">
+
+			<label>Scope of duties</label>
+			<input type="text" class="form-control" th:field="*{scopeOfDuties}" id="scopeOfDuties" placeholder="Scope of duties">
+
 		</div>
 
 		<button type="submit" class="btn btn-primary">Save</button>

@@ -7,31 +7,33 @@
 
 
 <div class="container">
-
 	<div class="starter-template">
-		<h1>Available Authors</h1>
+		<h1>Update a study</h1>
 	</div>
 
-	<table class="table table-bordered table-striped">
-		<thead>
-		<tr>
-			<td>Id</td>
-			<td>Author</td>
-			<td>Action</td>
-		</tr>
-		</thead>
-		<tbody>
-		<tr th:if="${authors.empty}">
-			<td colspan="4">No authors</td>
-		</tr>
-		<tr th:each="author : ${authors}">
-			<td th:text="${author.id}"></td>
-			<td><a th:href="@{'/authors/' + ${author.id}}" th:text="${author.name}"></a></td>
-			<td><a th:href="@{'/authors/' + ${author.id} + '/delete'}" ><i class="fa fa-trash" style="color:#009933; text-align: center;" aria-hidden="true"></i></a></td>
-		</tr>
-		</tbody>
-	</table>
+	<form action="#" th:action="@{'/profile/studies/' + ${study.id} + '/edit'}" th:object="${study}" method="post">
 
+		<div class="form-group">
+			<label>Name</label>
+			<input type="text" class="form-control" th:field="*{name}" id="name" placeholder="Name">
+
+			<label>Start date</label>
+			<input type="date" class="form-control" id="startDate"
+				   placeholder="Start date"
+				   th:field="*{startDate}"/>
+
+			<label>End date</label>
+			<input type="date" class="form-control" id="endDate"
+				   placeholder="End date"
+				   th:field="*{endDate}"/>
+
+			<label>Result</label>
+			<input type="text" class="form-control" th:field="*{result}" id="result" placeholder="Result">
+
+				</div>
+
+		<button type="submit" class="btn btn-primary">Save</button>
+	</form>
 </div>
 
 <div th:replace="fragments/footer :: footer"></div>

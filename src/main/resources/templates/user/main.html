@@ -1,24 +1,60 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-<head>
-    <meta charset="UTF-8">
-    <title>User</title>
-</head>
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="fragments/head :: head"></div>
 <body>
-
-<h3>Your profile</h3>
-
-<pre>
-<label th:text="'Email cím: '+${user.email}">Email cím</label>
-<label th:text="'Keresztnév: '+${user.firstName}">Keresztnév</label>
-<label th:text="'Utónév: '+${user.lastName}">Utónév</label>
-
-</pre>
+<div th:replace="fragments/header :: header"></div>
 
 
+<div class="container">
+    <div class="starter-template">
+        <h1>Your profile</h1>
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <tbody>
+
+        <tr>
+            <td>Email</td>
+            <td th:text="${user.email}"></td>
+        </tr>
+        <tr>
+            <td>First name</td>
+            <td th:text="${user.firstName}"></td>
+        </tr>
+        <tr>
+            <td>Last name</td>
+            <td th:text="${user.lastName}"></td>
+        </tr>
+        <tr>
+            <td>Birth place</td>
+            <td th:text="${user.birthPlace}"></td>
+        </tr>
+        <tr>
+            <td>Birth date</td>
+            <td th:text="${user.birthDate}"></td>
+        </tr>
+        <tr>
+            <td>Nationality</td>
+            <td th:text="${user.nationality}"></td>
+        </tr>
+        <tr>
+            <td>Phone number</td>
+            <td th:text="${user.phoneNumber}"></td>
+        </tr>
+
+        </tbody>
+    </table>
+
+
+        <input type="button" class="btn btn-primary" onclick="window.location.href = '/profile/edit';" value="Edit profile"/>
+
+
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -1,5 +1,7 @@
 package com.cvtopdf.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,8 +15,10 @@ public class Study extends BaseEntity {
     private String name;
 
     @Column( nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
     private String result;

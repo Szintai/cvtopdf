@@ -186,4 +186,24 @@ public class User extends BaseEntity{
 	public void setStudies(Set<Study> studies) {
 		this.studies = studies;
 	}
+
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"id: " + id+ '\'' +
+				"firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", email='" + email + '\'' +
+				", password='" + password + '\'' +
+				", birthPlace='" + birthPlace + '\'' +
+				", birthDate=" + birthDate +
+				", nationality='" + nationality + '\'' +
+				", phoneNumber='" + phoneNumber + '\'' +
+				", enabled=" + enabled +
+				", jobs=" + jobs +
+				", studies=" + studies +
+				", role=" + role +
+				'}';
+	}
 }

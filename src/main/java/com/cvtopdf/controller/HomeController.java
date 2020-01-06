@@ -28,7 +28,6 @@ public class HomeController {
 
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	boolean init=true;
 
 	public HomeController(UserService userService, RoleRepository roleRepository, JobRepository jobRepository, StudyRepository studyRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
 		this.userService = userService;
@@ -58,7 +57,7 @@ public class HomeController {
 	@PostMapping("/registration")
 	public String reg(@ModelAttribute User user)
 	{
-		System.out.println(user.toString());
+
 		String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPassword);
 

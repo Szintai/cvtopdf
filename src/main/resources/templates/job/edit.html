@@ -8,25 +8,31 @@
 
 <div class="container">
 	<div class="starter-template">
-		<h1>Update a specific book</h1>
+		<h1>Update a jobs</h1>
 	</div>
 
-<!-- 	<form action="#" th:action="@{'/books/' + ${book.id}}" th:object="${book}" method="post"> -->
-		<form action="/books/new" th:object="${book}" method="post">
+	<form action="#" th:action="@{'/profile/jobs/' + ${job.id} + '/edit'}" th:object="${job}" method="post">
 
 		<div class="form-group">
-			<label for="isbn">ISBN</label>
-			<input type="text" class="form-control" th:field="*{isbn}" id="isbn" placeholder="ISBN" maxlength="13">
-		</div>
+			<label>Name</label>
+			<input type="text" class="form-control" th:field="*{name}" id="name" placeholder="Name">
 
-		<div class="form-group">
-			<label for="title">Title</label>
-			<input type="text" class="form-control" th:field="*{title}" id="title" placeholder="Title">
-		</div>
+			<label>Start date</label>
+			<input type="date" class="form-control" id="startDate"
+				   placeholder="Start date"
+				   th:field="*{startDate}"/>
 
-		<div class="form-group">
-			<label for="author.name">Author</label>
-			<input type="text" class="form-control" th:field="*{author.name}" id="author.name" placeholder="Author">
+			<label>End date</label>
+			<input type="date" class="form-control" id="endDate"
+				   placeholder="End date"
+				   th:field="*{endDate}"/>
+
+			<label>Position</label>
+			<input type="text" class="form-control" th:field="*{position}" id="position" placeholder="Position">
+
+			<label>Scope of duties</label>
+			<input type="text" class="form-control" th:field="*{scopeOfDuties}" id="scopeOfDuties" placeholder="Scope of duties">
+
 		</div>
 
 		<button type="submit" class="btn btn-primary">Save</button>

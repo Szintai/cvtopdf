@@ -1,5 +1,7 @@
 package com.cvtopdf.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,8 +15,10 @@ public class Job extends BaseEntity {
     private String name;
 
     @Column( nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
     @Column( nullable = false)
@@ -87,5 +91,17 @@ public class Job extends BaseEntity {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    @Override
+    public String toString() {
+        return "Job{" +
+                "name='" + name + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", position='" + position + '\'' +
+                ", scopeOfDuties='" + scopeOfDuties + '\'' +
+                ", user=" + user +
+                '}';
     }
 }

@@ -11,26 +11,26 @@
 		<h1>Update a specific book</h1>
 	</div>
 
-	<form action="#" th:action="@{'/books/' + ${book.id}}" th:object="${book}" method="post">
-		<div class="form-group">
-			<label for="id">Id</label>
-			<input type="number" class="form-control" th:field="*{id}" id="id" placeholder="Id" disabled>
-		</div>
+	<form action="#" th:action="@{'/profile/studies/new'}" th:object="${study}" method="post">
 
 		<div class="form-group">
-			<label for="isbn">ISBN</label>
-			<input type="text" class="form-control" th:field="*{isbn}" id="isbn" placeholder="ISBN" maxlength="13">
-		</div>
+			<label>Name</label>
+			<input type="text" class="form-control" th:field="*{name}" id="name" placeholder="Name">
 
-		<div class="form-group">
-			<label for="title">Title</label>
-			<input type="text" class="form-control" th:field="*{title}" id="title" placeholder="Title">
-		</div>
+			<label>Start date</label>
+			<input type="date" class="form-control" id="startDate"
+				   placeholder="Start date"
+				   th:field="*{startDate}"/>
 
-		<div class="form-group d-none">
-			<label for="author">Author</label>
-			<input type="text" class="form-control" th:field="*{author}" id="author" placeholder="Author">
-		</div>
+			<label>End date</label>
+			<input type="date" class="form-control" id="endDate"
+				   placeholder="End date"
+				   th:field="*{endDate}"/>
+
+			<label>Result</label>
+			<input type="text" class="form-control" th:field="*{result}" id="result" placeholder="Result">
+
+			</div>
 
 		<button type="submit" class="btn btn-primary">Save</button>
 	</form>
