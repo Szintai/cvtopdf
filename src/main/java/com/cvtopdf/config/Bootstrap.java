@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -60,7 +61,7 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 		user1.setFirstName("a");
 		user1.setLastName("a");
 		user1.setPassword("a");
-		user1.setBirthDate(LocalDateTime.now());
+		user1.setBirthDate(LocalDate.now());
 		user1.setBirthPlace("Nagyatád");
 		user1.setNationality("HUN");
 		user1.setPhoneNumber("1234567");
@@ -70,7 +71,7 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 		user2.setFirstName("b");
 		user2.setLastName("b");
 		user2.setPassword("b");
-		user2.setBirthDate(LocalDateTime.now());
+		user2.setBirthDate(LocalDate.now());
 		user2.setBirthPlace("Nagyatád");
 		user2.setNationality("HUN");
 		user2.setPhoneNumber("1234567");
@@ -92,10 +93,10 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
 		job1.setName("Munka1");
 		job2.setName("Munka2");
-		job1.setStartDate(LocalDateTime.now());
-		job2.setStartDate(LocalDateTime.now());
-		job1.setEndDate(LocalDateTime.now());
-		job2.setEndDate(LocalDateTime.now());
+		job1.setStartDate(LocalDate.now());
+		job2.setStartDate(LocalDate.now());
+		job1.setEndDate(LocalDate.now());
+		job2.setEndDate(LocalDate.now());
 		job1.setPosition("Pozicio1");
 		job2.setPosition("Pozicio2");
 		job1.setScopeOfDuties("Munkakor1");
@@ -107,14 +108,14 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
 
 		study1.setName("Tanulmany1");
-		study1.setStartDate(LocalDateTime.now());
-		study1.setEndDate(LocalDateTime.now());
+		study1.setStartDate(LocalDate.now());
+		study1.setEndDate(LocalDate.now());
 		study1.setResult("Megfelelt1");
 
 
 		study2.setName("Tanulmány2");
-		study2.setStartDate(LocalDateTime.now());
-		study2.setEndDate(LocalDateTime.now());
+		study2.setStartDate(LocalDate.now());
+		study2.setEndDate(LocalDate.now());
 		study2.setResult("Megfelelt2");
 
 

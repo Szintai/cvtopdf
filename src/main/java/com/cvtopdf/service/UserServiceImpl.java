@@ -59,6 +59,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	@Override
 	public User save(User user)
 	{
+		user.setEnabled(true);
+		user.setRole(roleRepository.findByRole("USER"));
 		return userRepository.save(user);
 	}
 	

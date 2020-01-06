@@ -7,26 +7,30 @@
 
 
 <div class="container">
-    <div class="starter-template">
-        <h1>Login</h1>
-    </div>
+	<div class="starter-template">
+		<h1>Update a specific book</h1>
+	</div>
 
+<!-- 	<form action="#" th:action="@{'/books/' + ${book.id}}" th:object="${book}" method="post"> -->
+		<form action="/books/new" th:object="${book}" method="post">
 
-    <form class="box" name="login" th:action="@{/login}" method="post">
-        <label id="err" th:if="${param.error}">Hibás felhasználói név és jelszó</label>
-        <label th:if="${param.logout}" class="alert alert-success">Sikeresen kijelentkeztél</label>
+		<div class="form-group">
+			<label for="isbn">ISBN</label>
+			<input type="text" class="form-control" th:field="*{isbn}" id="isbn" placeholder="ISBN" maxlength="13">
+		</div>
 
+		<div class="form-group">
+			<label for="title">Title</label>
+			<input type="text" class="form-control" th:field="*{title}" id="title" placeholder="Title">
+		</div>
 
+		<div class="form-group">
+			<label for="author.name">Author</label>
+			<input type="text" class="form-control" th:field="*{author.name}" id="author.name" placeholder="Author">
+		</div>
 
-        <div class="form-group">
-        <input type="text" class="form-control" id="username" name="username" placeholder="Email cím"/>
-        </div>
-        <div class="form-group">
-        <input type="password" class="form-control" id="password" name="password" placeholder="Jelszó" />
-        </div>
-        <input type="submit" class="btn btn-primary" name="submit" value="Bejelentkezés" />
-
-    </form>
+		<button type="submit" class="btn btn-primary">Save</button>
+	</form>
 </div>
 
 <div th:replace="fragments/footer :: footer"></div>

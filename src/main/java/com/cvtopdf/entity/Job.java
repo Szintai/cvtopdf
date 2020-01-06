@@ -1,6 +1,7 @@
 package com.cvtopdf.entity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,9 +13,9 @@ public class Job extends BaseEntity {
     private String name;
 
     @Column( nullable = false)
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     @Column( nullable = false)
     private String position;
@@ -31,7 +32,7 @@ public class Job extends BaseEntity {
     public Job() {
     }
 
-    public Job(String name, LocalDateTime startDate, LocalDateTime endDate, String position, String scopeOfDuties, User user) {
+    public Job(String name, LocalDate startDate, LocalDate endDate, String position, String scopeOfDuties, User user) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -48,19 +49,19 @@ public class Job extends BaseEntity {
         this.name = name;
     }
 
-    public LocalDateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

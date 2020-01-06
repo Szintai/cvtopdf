@@ -1,6 +1,9 @@
 package com.cvtopdf.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -25,7 +28,8 @@ public class User extends BaseEntity{
 	private String birthPlace;
 
 	@Column( nullable = false)
-	private LocalDateTime birthDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate birthDate;
 
 	@Column( nullable = false)
 	private String nationality;
@@ -135,11 +139,11 @@ public class User extends BaseEntity{
 		this.birthPlace = birthPlace;
 	}
 
-	public LocalDateTime getBirthDate() {
+	public LocalDate getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(LocalDateTime birthDate) {
+	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
 
