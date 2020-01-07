@@ -47,6 +47,9 @@ public class User extends BaseEntity{
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	private Set<Study> studies;
 
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+	private Set<LanguageExam> languageExams;
+
 	@ManyToOne
 	@JoinColumn(name = "role_id")
 	private Role role;
@@ -186,6 +189,14 @@ public class User extends BaseEntity{
 
 	public void setStudies(Set<Study> studies) {
 		this.studies = studies;
+	}
+
+	public Set<LanguageExam> getLanguageExams() {
+		return languageExams;
+	}
+
+	public void setLanguageExams(Set<LanguageExam> languageExams) {
+		this.languageExams = languageExams;
 	}
 
 	@Override

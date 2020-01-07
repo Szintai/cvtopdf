@@ -1,14 +1,12 @@
 package com.cvtopdf.config;
 
 
-import com.cvtopdf.entity.Job;
-import com.cvtopdf.entity.Study;
-import com.cvtopdf.entity.User;
+import com.cvtopdf.entity.*;
 import com.cvtopdf.repository.RoleRepository;
 import com.cvtopdf.service.JobService;
+import com.cvtopdf.service.LanguageExamService;
 import com.cvtopdf.service.StudyService;
 import com.cvtopdf.service.UserService;
-import com.cvtopdf.entity.Role;
 
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -27,13 +25,15 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 	private final UserService userService;
 	private final JobService jobService;
 	private final StudyService studyService;
+	private final LanguageExamService languageExamService;
 	private final RoleRepository roleRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	public Bootstrap(UserService userService, JobService jobService, StudyService studyService, RoleRepository roleRepository,  BCryptPasswordEncoder bCryptPasswordEncoder) {
+	public Bootstrap(UserService userService, JobService jobService, StudyService studyService, LanguageExamService languageExamService, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
 		this.userService = userService;
 		this.jobService = jobService;
 		this.studyService = studyService;
+		this.languageExamService = languageExamService;
 		this.roleRepository = roleRepository;
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
@@ -51,7 +51,7 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 		Set<Job> jobs1=new HashSet<>();
 		Set<Job> jobs2=new HashSet<>();
 		Set<Study> studies1=new HashSet<>();
-
+		Set<LanguageExam> languageExams=new HashSet<>();
 
 		Role role=new Role("USER");
 
@@ -91,6 +91,8 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 		Study study1=new Study();
 		Study study2=new Study();
 
+		LanguageExam languageExam=new LanguageExam();
+
 		job1.setName("Munka1");
 		job2.setName("Munka2");
 		job1.setStartDate(LocalDate.now());
@@ -101,10 +103,6 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 		job2.setPosition("Pozicio2");
 		job1.setScopeOfDuties("Munkakor1");
 		job2.setScopeOfDuties("Munkakor2");
-
-
-
-
 
 
 		study1.setName("Tanulmany1");
@@ -118,20 +116,27 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 		study2.setEndDate(LocalDate.now());
 		study2.setResult("Megfelelt2");
 
+		languageExam.setType("Telc");
+		languageExam.setLanguage("English");
+		languageExam.setLevel("B2");
+		languageExam.setDate(LocalDate.now());
 
 		job1.setUser(user1);
 		job2.setUser(user2);
 		study1.setUser(user1);
 		study2.setUser(user1);
+		languageExam.setUser(user1);
 
 		jobs1.add(job1);
 		jobs2.add(job2);
 		studies1.add(study1);
 		studies1.add(study2);
+		languageExams.add(languageExam);
+
 		user1.setJobs(jobs1);
 		user2.setJobs(jobs2);
 		user1.setStudies(studies1);
-
+		user1.setLanguageExams(languageExams);
 
 		user1.setRole(role);
 		user2.setRole(role);
@@ -145,7 +150,7 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 		jobService.save(job2);
 		studyService.save(study1);
 		studyService.save(study2);
-
+		languageExamService.save(languageExam);
 
 
 
