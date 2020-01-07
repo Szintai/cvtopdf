@@ -5,10 +5,9 @@ import com.cvtopdf.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import sun.reflect.generics.tree.Tree;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class UserDetailsImpl implements UserDetails {
 
@@ -22,7 +21,7 @@ public class UserDetailsImpl implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		Collection<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+		Collection<GrantedAuthority> authorities = new HashSet<>();
 		Set<Role> roles = new HashSet<>();
 		roles.add(user.getRole());
 		for (Role role : roles) {

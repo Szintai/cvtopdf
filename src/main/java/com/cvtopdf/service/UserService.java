@@ -10,6 +10,8 @@ public interface UserService {
 	public User findByEmail(String email);
 
 	User save(User user);
+
+	public User findById(Long id);
 	
 
 }

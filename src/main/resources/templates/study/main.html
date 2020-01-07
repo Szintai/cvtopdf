@@ -19,7 +19,7 @@
             <td>Start date</td>
             <td>End date</td>
             <td>Result</td>
-            <td>Edit</td>
+            <td>Edit/Delete</td>
         </tr>
         </thead>
         <tbody>
@@ -31,7 +31,8 @@
             <td th:text="${study.startDate}"></td>
             <td th:text="${study.endDate}"></td>
             <td th:text="${study.result}"></td>
-            <td><a th:href="@{'/profile/studies/' + ${study.id} + '/edit'}" ><i class="fa fa-trash" style="color:#009933; text-align: center;" aria-hidden="true"></i></a></td>
+            <td><a th:href="@{'/profile/studies/' + ${study.id} + '/edit'}" ><i class="fa fa-edit" style="color:#009933; text-align: center;" aria-hidden="true"></i></a>
+                <a th:href="@{'/profile/studies/' + ${study.id} + '/delete'}" ><i class="fa fa-trash" style="color:#009933; text-align: center;" aria-hidden="true"></i></a></td>
 
         </tr>
         </tbody>

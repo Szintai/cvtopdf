@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.SortedSet;
 
 @Entity
 @Table( name = "users")
@@ -40,10 +41,10 @@ public class User extends BaseEntity{
 	@Column( nullable = false)
 	private boolean enabled;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	private Set<Job> jobs;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	private Set<Study> studies;
 
 	@ManyToOne
@@ -186,7 +187,6 @@ public class User extends BaseEntity{
 	public void setStudies(Set<Study> studies) {
 		this.studies = studies;
 	}
-
 
 	@Override
 	public String toString() {

@@ -23,8 +23,11 @@
 			<label>Last name</label>
 			<input type="text" class="form-control" th:field="*{lastName}" id="lastName" placeholder="Last name">
 
-			<label>Last name</label>
-			<input type="password" class="form-control" th:field="*{password}" id="password" placeholder="Password">
+			<label>Password</label>
+			<input type="password" class="form-control" th:field="*{password}" id="password" placeholder="Password" required>
+
+			<label>Password again</label>
+			<input type="password" class="form-control" id="passwordAgain" placeholder="Password again" required>
 
 			<label>Birth place</label>
 			<input type="text" class="form-control" th:field="*{birthPlace}" id="birthPlace" placeholder="Birth place">

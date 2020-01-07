@@ -2,6 +2,7 @@ package com.cvtopdf.entity;
 
 import javax.persistence.*;
 import java.util.Set;
+import java.util.SortedSet;
 
 
 @Entity
@@ -44,8 +45,4 @@ public class Role extends BaseEntity {
 	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
-
-	
-	
-
 }

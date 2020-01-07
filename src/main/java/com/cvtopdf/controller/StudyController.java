@@ -14,12 +14,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Controller
 public class StudyController {
 
     private final StudyService studyService;
 
     private final UserService userService;
+
+    private User authorizedUser;
 
     public StudyController(StudyService studyService, UserService userService) {
         this.studyService = studyService;
@@ -30,9 +35,9 @@ public class StudyController {
     public String studies(Model model)
     {
 
-        UserDetailsImpl userDetails=(UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        authorizedUser=((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
 
-        User user=userDetails.getUser();
+        User user=userService.findById(authorizedUser.getId());
 
         model.addAttribute("studies", user.getStudies());
 
@@ -49,9 +54,7 @@ public class StudyController {
     @PostMapping(value = "/profile/studies/{id}/edit")
     public String update(@PathVariable("id") Long id, Model model, Study study) {
 
-        UserDetailsImpl userDetails=(UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        User user=userDetails.getUser();
+       User user=userService.findById(authorizedUser.getId());
 
         study.setUser(user);
 
@@ -72,13 +75,30 @@ public class StudyController {
     @PostMapping(value ="/profile/studies/new")
     public String newStudySave(@ModelAttribute Study study) {
 
-        UserDetailsImpl userDetails=(UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        User user=userDetails.getUser();
-        user.getStudies().add(study);
+         User user=userService.findById(authorizedUser.getId());
         study.setUser(user);
+        user.getStudies().add(study);
         userService.save(user);
-        studyService.save(study);
+
+
+        return "redirect:/profile/studies";
+    }
+
+    @GetMapping(value = "/profile/studies/{id}/delete")
+    public String delete(@PathVariable("id") Long id, Model model) {
+
+        Set<Study> studyOld=userService.findById(authorizedUser.getId()).getStudies();
+        Set<Study> studies=new HashSet<>();
+        studyService.deleteById(id);
+        for (Study study: studyOld) {
+
+            if(study.getId() != id){studies.add(study);}
+        }
+
+        User user= userService.findById(authorizedUser.getId());
+        user.setStudies(studies);
+
+        userService.save(user);
 
         return "redirect:/profile/studies";
     }

@@ -49,8 +49,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	public User findByEmail(String email) {
 		return userRepository.findByEmail(email);
 	}
-	
-	
+
+	@Override
 	public User findById(Long id) {
 		
 		return userRepository.findById(id).orElse(new User());
@@ -59,10 +59,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	@Override
 	public User save(User user)
 	{
+
 		if(!user.isEnabled()){
 		user.setEnabled(true);
 		user.setRole(roleRepository.findByRole("USER"));
 		}
+
 		return userRepository.save(user);
 	}
 

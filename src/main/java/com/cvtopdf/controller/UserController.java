@@ -20,18 +20,22 @@ public class UserController {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    private User authorizedUser;
+
     public UserController(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userService = userService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+
     }
 
 
     @GetMapping("/profile")
     public String userDetails(Model model){
 
-        UserDetailsImpl userDetails=(UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        authorizedUser=((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+        User user= userService.findById(authorizedUser.getId());
 
-        User user=userDetails.getUser();
+
         model.addAttribute("user", user);
 
         return "user/main";
@@ -40,31 +44,32 @@ public class UserController {
 
     @GetMapping(value = "/profile/edit")
     public String findById( Model model) {
-        UserDetailsImpl userDetails=(UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        User user=userDetails.getUser();
-        model.addAttribute("user", user);
+        model.addAttribute("user", userService.findById(authorizedUser.getId()));
 
         return "user/edit";
     }
 
     @PostMapping(value = "/profile/edit")
-    public String update( Model model, User userToUpdate) {
+    public String update( Model model, User user) {
 
+        user.setId(authorizedUser.getId());
+        user.setJobs(userService.findById(authorizedUser.getId()).getJobs());
+        user.setStudies(userService.findById(authorizedUser.getId()).getStudies());
+        String encodedPassword="";
+     //   System.out.println(userToUpdate.toString());
 
+        if(user.getPassword() == null) {
+             encodedPassword = userService.findById(authorizedUser.getId()).getPassword();
 
-        UserDetailsImpl userDetails=(UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        User user=userDetails.getUser();
-
-        userToUpdate.setId(user.getId());
-        userToUpdate.setJobs(user.getJobs());
-        userToUpdate.setStudies(user.getStudies());
-
-        String encodedPassword = bCryptPasswordEncoder.encode(userToUpdate.getPassword());
-        userToUpdate.setPassword(encodedPassword);
-        model.addAttribute("user",  userService.save(userToUpdate));
-        System.out.println(userToUpdate.toString());
+        }
+        else
+        {
+            encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        }
+        user.setPassword(encodedPassword);
+        model.addAttribute("user",  userService.save(user));
+   //     System.out.println(userToUpdate.toString());
 
         return "redirect:/profile";
     }
