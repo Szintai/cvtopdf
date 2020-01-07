@@ -61,7 +61,11 @@ public class HomeController {
 		String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPassword);
 
-		userService.save(user);
+		if(userService.existsByEmail(user.getEmail()))
+		{return "redirect:/registration?emailAlreadyExists";}
+		else {
+			userService.save(user);
+		}
 
 		return "redirect:login";
 

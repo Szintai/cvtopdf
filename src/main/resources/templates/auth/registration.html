@@ -21,34 +21,53 @@
     </div>
 
 
-    <form class="box" name="registration" method=post th:action="@{/registration}" th:object="${user}">
+    <form class="box" name="registration" method=post th:action="@{/registration}" th:object="${user}" onsubmit="return validation()">
         <h1>Registration</h1>
-
+        <label th:if="${param.emailAlreadyExists}" class="alert alert-success">This email already exists</label>
+        <label th:if="${param.passwordsDifferent}" class="alert alert-success">The two passwords are different</label>
         <div class="form-group">
 
-        <input type="text" class="form-control" name="email" th:field="*{email}" placeholder="Email cím" required/>
+        <input type="text" class="form-control" name="email" th:field="*{email}" placeholder="Email" required/>
 
-        <input type="text" class="form-control" name="firstName" th:field="*{firstName}" placeholder="Keresztnév" required/>
+        <input type="text" class="form-control" name="firstName" th:field="*{firstName}" placeholder="First name" required/>
 
-        <input type="text" class="form-control" name="lastName" th:field="*{lastName}" placeholder="Vezetéknév" required/>
+        <input type="text" class="form-control" name="lastName" th:field="*{lastName}" placeholder="Last name" required/>
 
-        <input type="password" class="form-control" name="password" th:field="*{password}" placeholder="Jelszó" />
+        <input type="password" class="form-control" name="password" th:field="*{password}" placeholder="Password" />
 
-        <input type="password" class="form-control" name="password2" placeholder="Jelszó mégegyszer" />
+        <input type="password" class="form-control" name="password2" placeholder="Password again" />
 
-            <input type="text" class="form-control" name="birthPlace" th:field="*{birthPlace}" placeholder="Születési hely" required/>
+            <input type="text" class="form-control" name="birthPlace" th:field="*{birthPlace}" placeholder="Birth place" required/>
 
             <input type="date" class="form-control" id="birthDate"
-                   placeholder="Születési dátum"
+                   placeholder="Birth date"
                    th:field="*{birthDate}"/>
 
-            <input type="text" class="form-control" name="nationality" th:field="*{nationality}" placeholder="Nemzetiség" required/>
+            <input type="text" class="form-control" name="nationality" th:field="*{nationality}" placeholder="Nationality" required/>
 
-            <input type="text" class="form-control" name="phoneNumber" th:field="*{phoneNumber}" placeholder="Telefonszám" required/>
-        <input type="submit" name="submit" value="Regisztrálok" />
+            <input type="text" class="form-control" name="phoneNumber" th:field="*{phoneNumber}" placeholder="Phone number" required/>
+        <input type="submit" name="submit" value="Registration" />
         </div>
     </form>
 </div>
+
+<script type="text/javascript">
+function validation(){
+
+	var password=document.forms["registration"]["password"];
+	var password2=document.forms["registration"]["password2"];
+
+
+	if(password.value != password2.value)
+	{
+
+	    window.location.href = '/registration?passwordsDifferent';
+		return false;
+	}
+
+}
+</script>
+
 
 <div th:replace="fragments/footer :: footer"></div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

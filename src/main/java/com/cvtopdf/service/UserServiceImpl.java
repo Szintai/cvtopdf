@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Override
 	public User findByEmail(String email) {
-		return userRepository.findByEmail(email);
+		return userRepository.findByEmail(email).orElse(new User());
 	}
 
 	@Override
@@ -55,17 +55,23 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		
 		return userRepository.findById(id).orElse(new User());
 	}
-	
+
+	@Override
+	public Boolean existsByEmail(String email) {
+		return userRepository.existsByEmail(email);
+	}
+
 	@Override
 	public User save(User user)
 	{
 
-		if(!user.isEnabled()){
-		user.setEnabled(true);
-		user.setRole(roleRepository.findByRole("USER"));
-		}
+			if (!user.isEnabled()) {
+				user.setEnabled(true);
+				user.setRole(roleRepository.findByRole("USER"));
+			}
 
-		return userRepository.save(user);
+			return userRepository.save(user);
+
 	}
 
 	

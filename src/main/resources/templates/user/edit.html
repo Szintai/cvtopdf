@@ -11,8 +11,9 @@
 		<h1>Update a specific book</h1>
 	</div>
 
-	<form action="#" th:action="@{'/profile/edit/'}" th:object="${user}" method="post">
+	<form action="#" name="editProfile" th:action="@{'/profile/edit/'}" th:object="${user}" method="post" onsubmit="return validation()">
 
+		<label th:if="${param.passwordsDifferent}" class="alert alert-success">The two passwords are different</label>
 		<div class="form-group">
 			<label>Email</label>
 			<input type="text" class="form-control" th:field="*{email}" id="email" placeholder="Email">
@@ -27,7 +28,7 @@
 			<input type="password" class="form-control" th:field="*{password}" id="password" placeholder="Password" required>
 
 			<label>Password again</label>
-			<input type="password" class="form-control" id="passwordAgain" placeholder="Password again" required>
+			<input type="password" class="form-control" id="password2" placeholder="Password again" required>
 
 			<label>Birth place</label>
 			<input type="text" class="form-control" th:field="*{birthPlace}" id="birthPlace" placeholder="Birth place">
@@ -49,6 +50,24 @@
 		<button type="submit" class="btn btn-primary">Save</button>
 	</form>
 </div>
+
+<script type="text/javascript">
+function validation(){
+
+	var password=document.forms["editProfile"]["password"];
+	var password2=document.forms["editProfile"]["password2"];
+
+
+	if(password.value != password2.value)
+	{
+
+	    window.location.href = '/profile/edit?passwordsDifferent';
+		return false;
+	}
+
+}
+</script>
+
 
 <div th:replace="fragments/footer :: footer"></div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

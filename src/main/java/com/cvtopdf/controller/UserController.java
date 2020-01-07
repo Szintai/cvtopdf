@@ -57,7 +57,6 @@ public class UserController {
         user.setJobs(userService.findById(authorizedUser.getId()).getJobs());
         user.setStudies(userService.findById(authorizedUser.getId()).getStudies());
         String encodedPassword="";
-     //   System.out.println(userToUpdate.toString());
 
         if(user.getPassword() == null) {
              encodedPassword = userService.findById(authorizedUser.getId()).getPassword();
@@ -69,7 +68,7 @@ public class UserController {
         }
         user.setPassword(encodedPassword);
         model.addAttribute("user",  userService.save(user));
-   //     System.out.println(userToUpdate.toString());
+
 
         return "redirect:/profile";
     }
