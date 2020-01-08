@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class UserController {
@@ -57,20 +59,34 @@ public class UserController {
         user.setJobs(userService.findById(authorizedUser.getId()).getJobs());
         user.setStudies(userService.findById(authorizedUser.getId()).getStudies());
         String encodedPassword="";
+        encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
 
-        if(user.getPassword() == null) {
-             encodedPassword = userService.findById(authorizedUser.getId()).getPassword();
-
-        }
-        else
-        {
-            encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
-        }
         user.setPassword(encodedPassword);
         model.addAttribute("user",  userService.save(user));
 
 
         return "redirect:/profile";
+    }
+
+    @GetMapping("/profile/cv")
+    public String cv(Model model){
+
+        authorizedUser=((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+        User user= userService.findById(authorizedUser.getId());
+
+
+        model.addAttribute("user", user);
+
+        return "user/cv";
+    }
+
+
+
+    @PostMapping(" /profile/cv/pictureUpload")
+    public String prodUpload( @RequestParam("picture") MultipartFile picture) {
+
+
+        return "redirect:/profile/cv";
     }
 
 

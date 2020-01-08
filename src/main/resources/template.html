@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>Your cv</h1>
+</div>
+
+<table>
+    <tbody>
+
+    <tr>
+        <td>Email</td>
+        <td th:text="${user.email}"></td>
+    </tr>
+    <tr>
+        <td>First name</td>
+        <td th:text="${user.firstName}"></td>
+    </tr>
+    <tr>
+        <td>Last name</td>
+        <td th:text="${user.lastName}"></td>
+    </tr>
+    <tr>
+        <td>Birth place</td>
+        <td th:text="${user.birthPlace}"></td>
+    </tr>
+    <tr>
+        <td>Birth date</td>
+        <td th:text="${user.birthDate}"></td>
+    </tr>
+    <tr>
+        <td>Nationality</td>
+        <td th:text="${user.nationality}"></td>
+    </tr>
+    <tr>
+        <td>Phone number</td>
+        <td th:text="${user.phoneNumber}"></td>
+    </tr>
+
+    <tr>
+        <td>Your Studies</td>
+    </tr>
+    <tr>
+        <td>Name</td><td>Start date</td><td>End date</td><td>Result</td>
+    </tr>
+    <tr th:if="${user.studies.empty}">
+
+    </tr>
+    <tr th:each="study : ${user.studies}">
+        <td th:text="${study.name}"></td>
+        <td th:text="${study.startDate}"></td>
+        <td th:text="${study.endDate}"></td>
+        <td th:text="${study.result}"></td>
+    </tr>
+    <tr>
+        <td>Language exams</td>
+    </tr>
+    <tr>
+        <td>Type</td><td>Language</td><td>Level</td><td>Date</td>
+    </tr>
+    <tr>
+    <tr th:if="${user.languageExams.empty}">
+
+    </tr>
+    <tr th:each="languageExam : ${user.languageExams}">
+        <td th:text="${languageExam.type}"></td>
+        <td th:text="${languageExam.language}"></td>
+        <td th:text="${languageExam.level}"></td>
+        <td th:text="${languageExam.date}"></td>
+    </tr>
+    <tr>
+        <td>Your jobs</td>
+    </tr>
+    <tr>
+        <td>Name</td><td>Start date</td><td>End date</td><td>Position</td><td>Scope of duties</td>
+    </tr>
+    <tr th:if="${user.jobs.empty}">
+
+    </tr>
+    <tr th:each="job : ${user.jobs}">
+        <td th:text="${job.name}"></td>
+        <td th:text="${job.startDate}"></td>
+        <td th:text="${job.endDate}"></td>
+        <td th:text="${job.position}"></td>
+        <td th:text="${job.scopeOfDuties}"></td>
+    </tr>
+
+    </tbody>
+</table>
+
+
+</body>
+</html>

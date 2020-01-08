@@ -1,106 +1,84 @@
 package com.cvtopdf.service;
 
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.runtime.RuntimeConstants;
-import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import com.cvtopdf.entity.User;
+import com.itextpdf.text.DocumentException;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import org.w3c.tidy.Tidy;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.nio.file.FileSystems;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.tool.xml.XMLWorkerHelper;
+import static org.thymeleaf.templatemode.TemplateMode.HTML;
+
+import org.xhtmlrenderer.pdf.ITextRenderer;
+
+import static com.itextpdf.text.pdf.BaseFont.EMBEDDED;
+import static com.itextpdf.text.pdf.BaseFont.IDENTITY_H;
+
+
 
 @Service
 public class PdfServiceImp implements PdfService  {
 
-
+    private static final String OUTPUT_FILE = "test.pdf";
+    private static final String UTF_8 = "UTF-8";
 
 
     @Override
-    public HttpEntity<byte[]> createPdf() {
+    public void createPdf(User user) throws IOException, DocumentException {
 
-        String fileName="fajlneve";
+        System.out.println("1");
+        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+        templateResolver.setPrefix("/");
+        templateResolver.setSuffix(".html");
+        templateResolver.setTemplateMode(HTML);
+        templateResolver.setCharacterEncoding(UTF_8);
 
-        /* first, get and initialize an engine */
-        VelocityEngine ve = new VelocityEngine();
+        TemplateEngine templateEngine = new TemplateEngine();
+        templateEngine.setTemplateResolver(templateResolver);
 
-        /* next, get the Template */
-        ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-        ve.setProperty("classpath.resource.loader.class",
-                ClasspathResourceLoader.class.getName());
-        ve.init();
-        Template t = ve.getTemplate("templates/helloword.vm");
-        /* create a context and add data */
-        VelocityContext context = new VelocityContext();
-        context.put("name", "World");
-        /* now render the template into a StringWriter */
-        StringWriter writer = new StringWriter();
-        t.merge(context, writer);
-        /* show the World */
-        System.out.println(writer.toString());
+        System.out.println("2");
+        Context context = new Context();
+        context.setVariable("user", user);
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        String renderedHtmlContent = templateEngine.process("template", context);
+        String xHtml = convertToXhtml(renderedHtmlContent);
 
-        baos = generatePdf(writer.toString());
+        ITextRenderer renderer = new ITextRenderer();
+     //   renderer.getFontResolver().addFont("Code39.ttf", IDENTITY_H, EMBEDDED);
 
-        HttpHeaders header = new HttpHeaders();
-        header.setContentType(MediaType.APPLICATION_PDF);
-        header.set(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=" + fileName.replace(" ", "_"));
-        header.setContentLength(baos.toByteArray().length);
 
-        return new HttpEntity<byte[]>(baos.toByteArray(), header);
+        String baseUrl = FileSystems
+                .getDefault()
+                .getPath("src", "test", "resources")
+                .toUri()
+                .toURL()
+                .toString();
+        renderer.setDocumentFromString(xHtml, baseUrl);
+        renderer.layout();
 
-    }
+        // And finally, we create the PDF:
+        OutputStream outputStream = new FileOutputStream(OUTPUT_FILE);
+        renderer.createPDF(outputStream);
+        outputStream.close();
 
-    private ByteArrayOutputStream generatePdf(String html) {
-
-        String pdfFilePath = "";
-        PdfWriter pdfWriter = null;
-
-        // create a new document
-        Document document = new Document();
-        try {
-
-            document = new Document();
-            // document header attributes
-            document.addAuthor("Kiran Dhongade");
-            document.addCreationDate();
-            document.addProducer();
-            document.addCreator("kinns123.github.io");
-            document.addTitle("HTML to PDF using itext");
-            document.setPageSize(PageSize.LETTER);
-
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            //PdfWriter.getInstance(document, baos);
-            PdfWriter.getInstance(document, new FileOutputStream("nev.pdf"));
-
-            // open document
-            document.open();
-
-            XMLWorkerHelper xmlWorkerHelper = XMLWorkerHelper.getInstance();
-            xmlWorkerHelper.getDefaultCssResolver(true);
-            xmlWorkerHelper.parseXHtml(pdfWriter, document, new StringReader(
-                    html));
-            // close the document
-            document.close();
-            System.out.println("PDF generated successfully");
-
-            return baos;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
 
     }
+
+    private String convertToXhtml(String html) throws UnsupportedEncodingException {
+        Tidy tidy = new Tidy();
+        tidy.setInputEncoding(UTF_8);
+        tidy.setOutputEncoding(UTF_8);
+        tidy.setXHTML(true);
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(html.getBytes(UTF_8));
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        tidy.parseDOM(inputStream, outputStream);
+        return outputStream.toString(UTF_8);
+    }
+
+
 }

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+Hello   Welcome to Velocity!
+<h1> Hello User</h1>
+
+$user.name
+
+</body>
+</html>
