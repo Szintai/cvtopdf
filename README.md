@@ -6,8 +6,8 @@ This project will be able to create your cv and download it in a pdf file.
 
 Features:
 
-- pdf generation
-- some features
+- picture upload
+- better frontend
 
 
 Technologies:
