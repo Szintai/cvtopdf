@@ -6,9 +6,6 @@ This project will be able to create your cv and download it in a pdf file.
 
 Features:
 
-- controllers
-- entire frontend
-- registration
 - pdf generation
 - some features
 
