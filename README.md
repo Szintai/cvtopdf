@@ -6,8 +6,16 @@ This project will be able to create your cv and download it in a pdf file.
 
 Features:
 
-- pdf generation
-- some features
+- CV save in pdf
+- CRUD: personal details, jobs, studies, language certifications
+- login
+- registration
+
+TODO:
+
+- photo display in pdf
+- exception handler
+- better frontend
 
 
 Technologies:
@@ -16,3 +24,4 @@ Technologies:
 - Spring MVC
 - JPA
 - H2
+- Flying Saucer (PDF generation with Thymeleaf)
