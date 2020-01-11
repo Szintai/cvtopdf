@@ -13,7 +13,8 @@ Features:
 
 TODO:
 
-- picture upload
+- photo display in pdf
+- exception handler
 - better frontend
 
 
