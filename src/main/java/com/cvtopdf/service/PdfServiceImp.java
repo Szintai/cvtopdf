@@ -31,7 +31,6 @@ public class PdfServiceImp implements PdfService  {
     @Override
     public void createPdf(User user) throws IOException, DocumentException {
 
-        System.out.println("1");
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
         templateResolver.setPrefix("/");
         templateResolver.setSuffix(".html");
@@ -41,7 +40,6 @@ public class PdfServiceImp implements PdfService  {
         TemplateEngine templateEngine = new TemplateEngine();
         templateEngine.setTemplateResolver(templateResolver);
 
-        System.out.println("2");
         Context context = new Context();
         context.setVariable("user", user);
 

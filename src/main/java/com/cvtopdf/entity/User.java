@@ -50,6 +50,10 @@ public class User extends BaseEntity{
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	private Set<LanguageExam> languageExams;
 
+	@OneToOne(cascade = CascadeType.ALL , fetch = FetchType.EAGER,  orphanRemoval = true)
+	@JoinColumn(name = "photo_id", referencedColumnName = "id")
+	private Photo photo;
+
 	@ManyToOne
 	@JoinColumn(name = "role_id")
 	private Role role;
@@ -197,6 +201,14 @@ public class User extends BaseEntity{
 
 	public void setLanguageExams(Set<LanguageExam> languageExams) {
 		this.languageExams = languageExams;
+	}
+
+	public Photo getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(Photo photo) {
+		this.photo = photo;
 	}
 
 	@Override
